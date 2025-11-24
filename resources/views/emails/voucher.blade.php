@@ -9,8 +9,7 @@
     <p>Tunjukkan QR Code di bawah ini kepada tim merchandise untuk menukarkannya.</p>
     
     <div style="margin: 20px 0;">
-        <!-- Embed QR Code dari data base64 -->
-        <img src="{{ $qrCodeBase64 }}" alt="Voucher QR Code">
+        <img src="{{ $message->embedData(base64_decode($qrCodeBase64), 'qrcode.png', 'image/png') }}" alt="Voucher QR Code">
     </div>
     
     <p>Sampai jumpa di hari H!</p>

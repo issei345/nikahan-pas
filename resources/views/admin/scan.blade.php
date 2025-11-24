@@ -12,7 +12,6 @@
                     
                     <div id="qr-reader" style="width: 500px; max-width: 90%; margin: 0 auto;"></div>
                     
-                    <!-- Area untuk menampilkan pesan hasil scan -->
                     <div id="scan-result" class="mt-6 text-center text-lg font-medium">
                         Arahkan kamera ke QR Code Voucher...
                     </div>
@@ -22,35 +21,33 @@
         </div>
     </div>
 
-    <!-- Load library scanner -->
-    <script src="[https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js](https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js)"></script>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const resultContainer = document.getElementById('scan-result');
             
-            // Fungsi callback saat QR code sukses terdeteksi
+            // 1. FUNGSI CALLBACK SUKSES
             function onScanSuccess(decodedText, decodedResult) {
-                // `decodedText` adalah isi dari QR code (kode voucher)
                 console.log(`Scan berhasil: ${decodedText}`);
 
-                // Matikan scanner
+                // Hentikan scanner segera setelah berhasil scan
                 html5QrcodeScanner.clear();
                 resultContainer.innerHTML = `<span class="text-blue-600">Memvalidasi kode ${decodedText}...</span>`;
 
-                // Kirim kode ke backend via API
+                // Kirim kode ke backend Laravel
                 redeemVoucher(decodedText);
             }
 
-            // Fungsi callback saat scan gagal (opsional)
+            // 2. FUNGSI CALLBACK GAGAL (opsional)
             function onScanError(errorMessage) {
-                // console.warn(`Scan error: ${errorMessage}`);
+                // Biarkan kosong agar console tidak terlalu ramai selama scanning
             }
 
-            // Inisialisasi scanner
+            // 3. INISIALISASI SCANNER
             let html5QrcodeScanner = new Html5QrcodeScanner(
                 "qr-reader", // ID elemen <div>
-                { fps: 10, qrbox: { width: 250, height: 250 } }, // Konfigurasi
+                { fps: 10, qrbox: { width: 250, height: 250 } }, // Konfigurasi kamera
                 false // verbose
             );
             
@@ -58,31 +55,33 @@
             html5QrcodeScanner.render(onScanSuccess, onScanError);
 
 
-            // Fungsi untuk mengirim data ke API
+            // 4. FUNGSI UNTUK MENGIRIM DATA KE API LARAVEL
             async function redeemVoucher(code) {
                 try {
                     const response = await fetch("{{ route('voucher.redeem') }}", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}' // Penting untuk keamanan
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}' // Token Keamanan Laravel
                         },
                         body: JSON.stringify({ code: code })
                     });
 
-                    const result = await response.json();
-
-                    if (response.ok) {
-                        // Sukses
-                        resultContainer.innerHTML = `<span class="text-green-600">${result.message}</span>`;
-                    } else {
-                        // Error (voucher tidak valid, sudah dipakai, dll)
-                        resultContainer.innerHTML = `<span class="text-red-600">${result.error}</span>`;
+                    // Cek jika respons 500 atau 4xx
+                    if (!response.ok) {
+                        const errorResult = await response.json();
+                        // Tampilkan pesan error (e.g., "Voucher sudah digunakan")
+                        resultContainer.innerHTML = `<span class="text-red-600">ERROR: ${errorResult.error || 'Terjadi kesalahan tidak terduga.'}</span>`;
+                        return; // Hentikan proses
                     }
 
+                    // Jika respons 200 OK
+                    const result = await response.json();
+                    resultContainer.innerHTML = `<span class="text-green-600">${result.message}</span>`;
+                    
                 } catch (error) {
                     console.error('Fetch error:', error);
-                    resultContainer.innerHTML = `<span class="text-red-600">Error: Gagal terhubung ke server.</span>`;
+                    resultContainer.innerHTML = `<span class="text-red-600">Error: Gagal terhubung ke server atau masalah jaringan.</span>`;
                 }
 
                 // Tambahkan tombol untuk scan lagi

@@ -15,7 +15,7 @@ class VoucherNotification extends Mailable
     use Queueable, SerializesModels;
 
     public $guest;
-    public $qrCodeBase64;
+    public $qrCodeBase64; // Sekarang berisi Base64 tanpa prefix Data URI
 
     /**
      * Create a new message instance.
@@ -23,7 +23,10 @@ class VoucherNotification extends Mailable
     public function __construct(Guest $guest, string $qrCodeBase64)
     {
         $this->guest = $guest;
-        $this->qrCodeBase64 = $qrCodeBase64;
+
+        // >> PERUBAHAN UTAMA: Bersihkan string Base64 dari Data URI prefix.
+        // Ini memastikan hanya data biner yang tersisa untuk di-decode oleh embedData.
+        $this->qrCodeBase64 = preg_replace('/^data:image\/(.*?);base64,/', '', $qrCodeBase64);
     }
 
     /**
