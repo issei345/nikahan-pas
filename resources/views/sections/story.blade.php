@@ -40,7 +40,7 @@
 }
     </style>
 </head>
-<section id="schedule" class="schedule-section">
+<section id="story" class="schedule-section">
     
     <div class="schedule-image-container">
         <img 

@@ -30,7 +30,7 @@
 
 
 .hero {
-    background-image: url('{{ asset('img/meja.svg') }}');
+   
     background-size: contain; /* atau cover */
     background-repeat: no-repeat;
     background-position: bottom center;

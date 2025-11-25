@@ -14,7 +14,7 @@ Route::get('/', function () {
 })->name('COVER');
 
 Route::get('/undangan', function () {
-    return view('undangan'); // Ganti 'undangan' dengan nama view halaman undangan Anda
+    return view('undangan');
 })->name('undangan');
 
 // Halaman RSVP untuk Tamu

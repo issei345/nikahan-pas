@@ -56,8 +56,8 @@
             color: #0E4B77;
         }
 
-        /* --- 2. HERO SECTION --- */
-        .hero {
+        /* --- 2. app SECTION --- */
+        .app {
             display: flex;
             justify-content: center;
             align-items: flex-start;
@@ -151,7 +151,7 @@
             width: 100%;
             display: flex;
             justify-content: center;
-        }
+        } */
 
         .table-illustration {
             max-width: 100%;
@@ -202,7 +202,7 @@
         </nav>
     </header>
 
-    <section class="hero" id="hero"> 
+    <section class="app" id="app"> 
         <div class="invitation-container">
             <div class="text-section">
                 <div class="curved-text-container">
@@ -246,27 +246,40 @@
         </div>
     </section>
 
-    <script>
-        const header = document.getElementById("mainHeader");
+   <script>
+    const header = document.getElementById("mainHeader");
+    let lastScroll = 0;
 
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                header.classList.remove('hidden');
-            });
-        });
+    // --- FUNGSI SCROLL HALUS (BARU) ---
+    document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault(); // Mencegah aksi lompat (jump) default browser
 
-        let lastScroll = 0;
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
 
-        window.addEventListener("scroll", function () {
-            let currentScroll = window.pageYOffset;
-
-            if (currentScroll > lastScroll && currentScroll > 50) { 
-                header.classList.add("hidden");
-            } else {
-                header.classList.remove("hidden");
+            if (targetElement) {
+                // Lakukan scroll animasi ke elemen target
+                targetElement.scrollIntoView({
+                    behavior: 'smooth' // Mengaktifkan scroll halus JavaScript
+                });
+                // Pastikan header muncul setelah diklik
+                header.classList.remove('hidden'); 
             }
-
-            lastScroll = currentScroll;
         });
-    </script>
+    });
+
+    // --- FUNGSI HIDE/SHOW HEADER (LAMA, TIDAK BERUBAH) ---
+    window.addEventListener("scroll", function () {
+        let currentScroll = window.pageYOffset;
+
+        if (currentScroll > lastScroll && currentScroll > 50) { 
+            header.classList.add("hidden");
+        } else {
+            header.classList.remove("hidden");
+        }
+
+        lastScroll = currentScroll;
+    });
+</script>
 </html>

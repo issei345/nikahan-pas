@@ -50,7 +50,7 @@
 }
     </style>
 </head>
-<section id="story" class="story-section">
+<section id="hero" class="story-section">
     
     <h2>Come for the love,<br>stay for the cake!</h2>
     
