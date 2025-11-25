@@ -10,7 +10,11 @@ use Illuminate\Support\Facades\Route;
 // --- 1. RUTE UMUM (NON-AUTH) ---
 
 Route::get('/', function () {
-    return view('undangan');
+    return view('cover');
+})->name('COVER');
+
+Route::get('/undangan', function () {
+    return view('undangan'); // Ganti 'undangan' dengan nama view halaman undangan Anda
 })->name('undangan');
 
 // Halaman RSVP untuk Tamu
