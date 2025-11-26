@@ -16,7 +16,9 @@
 
 <body>
     {{-- Header --}}
-    @include('sections.app')
+    @include('sections.header')
+
+    {{-- Cover --}}
 
     {{-- Section Hero --}}
     @include('sections.hero')

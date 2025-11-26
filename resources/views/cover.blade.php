@@ -17,7 +17,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #f0f0f0; /* Warna fallback */
+            background-color: #F9F6F1; /* Warna fallback */
         }
 
         .cover-container {

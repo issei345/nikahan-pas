@@ -38,7 +38,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Halaman Scanner Voucher
     // Memanggil view 'admin.scan'
-    Route::get('/admin/voucher/scan', function () {
+    Route::get('/admin/scan', function () {
         return view('admin.scan');
     })->name('voucher.scan');
 
