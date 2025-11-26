@@ -68,7 +68,9 @@ class RsvpController extends Controller
         }
 
         // 5. Redirect dengan pesan sukses
+        // MODIFIKASI: Menambahkan 'rsvp_status' ke sesi agar bisa dibaca oleh Blade View
         return redirect()->route('undangan',['#rsvp'])
-                    ->with('success', 'Konfirmasi kehadiran Anda telah berhasil disimpan.'); 
+                    ->with('success', 'Konfirmasi kehadiran Anda telah berhasil disimpan.')
+                    ->with('rsvp_status', $request->rsvp_status);
     }
 }

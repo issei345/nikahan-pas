@@ -71,7 +71,7 @@
             max-width: 1350px; 
             width: 100%;
             padding: 20px;
-            box-sizing: border-box;
+            box-sizing: none;
             /* Jarak dari header fixed di atas */
             margin-top: 60px; 
         }

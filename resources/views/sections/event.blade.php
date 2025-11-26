@@ -56,9 +56,7 @@
         <img 
             src="{{ asset('img/kalender.svg') }}" 
             alt="Kalender Pernikahan" 
-            class="calendar-svg"
-        >
-        
+            class="calendar-svg">    
         </div>
 </section>
 </html>
