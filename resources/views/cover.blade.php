@@ -157,8 +157,22 @@
         <!-- Gambar orang (diposisikan absolute di bawah) --><div class="couple-image"></div> 
 
         <div class="next-button-container">
-            <button class="next-button" onclick="window.location.href = '{{ route('undangan') }}'">NEXT</button>
-        </div>
+          <button class="next-button" onclick="animateAndRedirect('{{ route('undangan') }}')">NEXT</button></div>
     </div>
+
+    <script>
+    function animateAndRedirect(url) {
+        // 1. Ambil elemen cover
+        const cover = document.querySelector('.cover-container');
+
+        // 2. Tambahkan kelas animasi
+        cover.classList.add('fade-out-up');
+
+        // 3. Set timeout untuk menunggu animasi selesai (0.7s) sebelum pindah halaman
+        setTimeout(() => {
+            window.location.href = url;
+        }, 700); 
+    }
+</script>
 </body>
 </html>

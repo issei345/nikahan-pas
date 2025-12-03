@@ -12,6 +12,7 @@
         background-color: #F9F6F1;
     }
   </style>
+
 </head>
 
 <body>
@@ -34,8 +35,32 @@
 
     {{-- Section RSVP --}}
     @include('sections.footer')
-    
+   <audio id="musicPlayer" loop>
+    <source src="{{ asset('sounds/kebogiro.mp3') }}" type="audio/mpeg">
+    Browser Anda tidak mendukung elemen audio.
+</audio>
 
-
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const music = document.getElementById('musicPlayer');
+        
+        // **LANGKAH B: Baca Flag dari LocalStorage**
+        const shouldPlay = localStorage.getItem('playMusicOnLoad');
+        
+        // 3. Cek apakah tombol NEXT sudah diklik (flag 'true')
+        if (shouldPlay === 'true') {
+            music.play().then(() => {
+                console.log("Musik berhasil diputar setelah interaksi dari Cover.");
+            }).catch(error => {
+                console.error("Gagal memutar audio meskipun sudah ada interaksi:", error);
+            });
+            
+            // 4. Hapus flag agar musik tidak berulang jika pengguna me-refresh halaman
+            localStorage.removeItem('playMusicOnLoad');
+        }
+    });
+        // (Di sini Anda bisa menambahkan logika untuk ikon play/pause yang fixed)
+ 
+</script>
 </body>
 </html>

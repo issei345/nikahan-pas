@@ -11,6 +11,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
     
     <style> 
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #F9F6F1; /* Krem */
+            font-family: Arial, sans-serif;
+        }
 
         /* --- 1. HEADER/NAVIGASI --- */
         .header {
@@ -24,6 +30,7 @@
             z-index: 999;
             display: flex;
             justify-content: center;
+            box-sizing: border-box; 
         }
 
         .header.hidden {
@@ -32,37 +39,43 @@
 
         header ul {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start; /* Default start dari kiri */
             font-family: 'Montserrat', sans-serif; 
             gap: 30px; 
             list-style: none;
-            padding: 0; 
+            padding: 0 10px; 
             margin: 0; 
             max-width: 900px;
             width: 100%;
+        /* Memungkinkan scroll horizontal di mobile */
+            white-space: nowrap;
+        }
+        
+        header li {
+            flex-shrink: 0; /* Mencegah item navigasi menyusut */
         }
 
         header a {
             text-decoration: none;
-            color: #1E5B87; /* Warna biru gelap */
+            color: #1E5B87; /* Biru gelap */
             font-weight: 700;
             font-size: 0.8em;
             letter-spacing: 0.1em; 
             text-transform: uppercase;
             transition: color 0.2s ease;
+            padding: 5px 0;
         }
 
         header a:hover {
             color: #0E4B77;
         }
 
-        /* --- 2. app SECTION --- */
+        /* --- 2. app SECTION (Hero) --- */
         .app {
             display: flex;
             justify-content: center;
             align-items: flex-start;
             width: 100%; 
-            /* Jarak dari body margin */
             margin-top: 20px; 
         }
 
@@ -71,7 +84,7 @@
             max-width: 1350px; 
             width: 100%;
             padding: 20px;
-            box-sizing: none;
+            box-sizing: border-box;
             /* Jarak dari header fixed di atas */
             margin-top: 60px; 
         }
@@ -80,7 +93,8 @@
         .text-section {
             position: relative;
             display: inline-block; 
-            width: 350px; 
+            width: 100%; 
+            max-width: 350px; 
             height: 180px; 
             margin-bottom: 30px; 
         }
@@ -110,7 +124,7 @@
 
         /* Nama (Raya & Khafidz) */
         .names {
-            font-family: 'Beth Ellen', cursive;
+            font-family: 'Playfair Display', serif;
             font-size: 3em; 
             color: #1E5B87; 
             line-height: 1;
@@ -125,24 +139,26 @@
         .name-raya, .name-amp, .name-khafidz {
             position: absolute;
             white-space: nowrap;
+            left: 50%;
+            transform: translateX(-50%) !important; /* Overwrite translate yang lain */
+            font-family: 'Dancing Script', cursive;
             
         }
 
         .name-raya {
-            top: 0; left: 0; 
-            transform: translate(-15%, 0); 
+            top: 0; 
             font-size: 1.1em;
         }
 
         .name-amp {
-            top: 45%; left: 50%;
-            transform: translate(-50%, -50%); 
+            top: 45%; 
+            transform: translate(-50%, -50%) !important; 
             font-size: 0.8em; 
+            font-family: 'Playfair Display', serif;
         }
 
         .name-khafidz {
-            bottom: 0; right: 0; 
-            transform: translate(15%, 0); 
+            bottom: 0; 
             font-size: 1.1em;
         }
 
@@ -151,7 +167,7 @@
             width: 100%;
             display: flex;
             justify-content: center;
-        } */
+        }
 
         .table-illustration {
             max-width: 100%;
@@ -159,39 +175,71 @@
             display: block;
         }
 
-        /* --- MEDIA QUERIES --- */
+        /* --- MEDIA QUERIES (Responsif) --- */
         @media (max-width: 768px) {
             .header ul {
                 gap: 15px;
                 padding: 0 10px; 
-                overflow-x: auto; 
-                white-space: nowrap;
-                justify-content: flex-start;
             }
             .header a {
-                font-size: 0.7em;
+                font-size: 0.65em; 
             }
             .text-section {
-                width: 300px;
+                max-width: 300px;
                 height: 150px; 
                 margin-top: 20px;
             }
             .curved-text-container {
-                font-size: 1.5em;
+                font-size: 1.4em;
                 width: 250px;
                 height: 120px;
             }
             .names {
-                font-size: 2.5em;
+                font-size: 2.2em; 
+                width: 250px;
+                height: 120px;
+                transform: translate(-50%, 0); 
+            }
+            .name-raya, .name-khafidz {
+                font-size: 1.2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 15px 5px 5px; 
+            }
+            .header ul {
+                gap: 10px;
+                padding: 0 5px;
+            }
+            .header a {
+                font-size: 0.6em; 
+            }
+
+            .text-section {
+                max-width: 90%; 
+                height: 140px; 
+            }
+            .curved-text-container {
+                font-size: 1.2em;
                 width: 200px;
                 height: 100px;
-                transform: translate(-50%, 0); 
+            }
+            .names {
+                font-size: 1.8em; 
+                width: 90%;
+                height: 100px;
+            }
+            .name-raya, .name-khafidz {
+                font-size: 1em; 
             }
         }
     </style>
 </head>
 
-<header id="mainHeader" class="header">
+<body>
+    <header id="mainHeader" class="header">
         <nav>
             <ul>
                 <li><a href="#hero">OUR STORY</a></li>
@@ -202,7 +250,7 @@
         </nav>
     </header>
 
-    <section class="app" id="app"> 
+    <section class="app" id="hero"> 
         <div class="invitation-container">
             <div class="text-section">
                 <div class="curved-text-container">
@@ -245,41 +293,44 @@
             </div>
         </div>
     </section>
+    
+    
+    <script>
+        const header = document.getElementById("mainHeader");
+        let lastScroll = 0;
 
-   <script>
-    const header = document.getElementById("mainHeader");
-    let lastScroll = 0;
+        // --- FUNGSI SCROLL HALUS ---
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault(); 
 
-    // --- FUNGSI SCROLL HALUS (BARU) ---
-    document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault(); // Mencegah aksi lompat (jump) default browser
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
 
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-
-            if (targetElement) {
-                // Lakukan scroll animasi ke elemen target
-                targetElement.scrollIntoView({
-                    behavior: 'smooth' // Mengaktifkan scroll halus JavaScript
-                });
-                // Pastikan header muncul setelah diklik
-                header.classList.remove('hidden'); 
-            }
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth' 
+                    });
+                    // Pastikan header muncul setelah diklik
+                    header.classList.remove('hidden'); 
+                }
+            });
         });
-    });
 
-    // --- FUNGSI HIDE/SHOW HEADER (LAMA, TIDAK BERUBAH) ---
-    window.addEventListener("scroll", function () {
-        let currentScroll = window.pageYOffset;
+        // --- FUNGSI HIDE/SHOW HEADER (saat scroll) ---
+        window.addEventListener("scroll", function () {
+            let currentScroll = window.pageYOffset;
 
-        if (currentScroll > lastScroll && currentScroll > 50) { 
-            header.classList.add("hidden");
-        } else {
-            header.classList.remove("hidden");
-        }
+            if (currentScroll > lastScroll && currentScroll > 50) { 
+                // Scroll ke bawah
+                header.classList.add("hidden");
+            } else {
+                // Scroll ke atas
+                header.classList.remove("hidden");
+            }
 
-        lastScroll = currentScroll;
-    });
-</script>
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
 </html>
